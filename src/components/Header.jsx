@@ -1,57 +1,75 @@
 import { useState } from 'react';
-import { Truck, Menu, X } from 'lucide-react';
+import { Truck, Menu, X, Phone } from 'lucide-react';
+import './Header.css';
 
 export default function Header() {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
-    setIsMobileOpen(!isMobileOpen);
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   const closeMobileMenu = () => {
-    setIsMobileOpen(false);
+    setMobileMenuOpen(false);
+  };
+
+  const scrollToQuote = (e) => {
+    e.preventDefault();
+    closeMobileMenu();
+    const section = document.getElementById('quote');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <header className="header">
-      <div className="container header-container">
-        <a href="#home" className="logo-link">
-          <div className="logo-icon">
-            <Truck size={32} />
+      <div className="top-bar">
+        <div className="container top-bar-content">
+          <div className="top-bar-info">
+            <span>24/7 Dispatch Center</span>
+            <span className="divider">|</span>
+            <a href="tel:7735550100" className="phone-link">
+              <Phone size={14} /> (773) 555-0100
+            </a>
           </div>
-          <span>RoadLine <span className="logo-accent">Trucking</span></span>
-        </a>
+          <div className="top-bar-location">Chicago, IL &bull; Nationwide Coverage</div>
+        </div>
+      </div>
 
-        <nav>
-          <ul className={`nav-menu ${isMobileOpen ? 'open' : ''}`}>
-            <li>
-              <a href="#home" className="nav-link" onClick={closeMobileMenu}>Home</a>
-            </li>
-            <li>
-              <a href="#services" className="nav-link" onClick={closeMobileMenu}>Services</a>
-            </li>
-            <li>
-              <a href="#about" className="nav-link" onClick={closeMobileMenu}>About</a>
-            </li>
-            <li>
-              <a href="#fleet" className="nav-link" onClick={closeMobileMenu}>Fleet</a>
-            </li>
-            <li>
-              <a href="#contact" className="nav-link" onClick={closeMobileMenu}>Contact</a>
-            </li>
-          </ul>
-        </nav>
+      <div className="main-nav-wrapper">
+        <div className="container main-nav">
+          <a href="#home" className="logo">
+            <div className="logo-icon">
+              <Truck size={28} />
+            </div>
+            <div className="logo-text">
+              <span className="brand-name">RoadLine</span>
+              <span className="brand-tag">TRUCKING</span>
+            </div>
+          </a>
 
-        <div className="header-actions">
-          <a href="#quote" className="btn btn-primary">
+          <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+            <a href="#home" onClick={closeMobileMenu}>Home</a>
+            <a href="#services" onClick={closeMobileMenu}>Services</a>
+            <a href="#about" onClick={closeMobileMenu}>About</a>
+            <a href="#fleet" onClick={closeMobileMenu}>Fleet</a>
+            <a href="#contact" onClick={closeMobileMenu}>Contact</a>
+            <a href="#quote" className="btn btn-quote-mobile" onClick={scrollToQuote}>
+              Get a Quote
+            </a>
+          </nav>
+
+          <a href="#quote" className="btn btn-primary btn-quote-desktop" onClick={scrollToQuote}>
             Get a Quote
           </a>
+
           <button
-            className="mobile-toggle"
+            className="mobile-menu-toggle"
             onClick={toggleMobileMenu}
             aria-label="Toggle navigation menu"
           >
-            {isMobileOpen ? <X size={28} /> : <Menu size={28} />}
+            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </div>
       </div>

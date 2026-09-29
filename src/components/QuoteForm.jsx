@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import './QuoteForm.css';
 
 export default function QuoteForm() {
   const [formData, setFormData] = useState({
@@ -8,45 +9,78 @@ export default function QuoteForm() {
     phone: '',
     pickupLocation: '',
     deliveryLocation: '',
-    freightType: 'FTL',
+    freightType: '',
     message: '',
   });
 
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
-    }
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-    if (!formData.pickupLocation.trim()) newErrors.pickupLocation = 'Pickup location is required';
-    if (!formData.deliveryLocation.trim()) newErrors.deliveryLocation = 'Delivery location is required';
-    if (!formData.freightType) newErrors.freightType = 'Freight type is required';
-
-    return newErrors;
-  };
+  const freightOptions = [
+    'Dry Van',
+    'Reefer (Temperature Controlled)',
+    'Flatbed',
+    'Box Truck',
+    'Expedited',
+    'Other',
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error for this field when typing
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: null }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Full Name is required';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email address is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    }
+
+    if (!formData.pickupLocation.trim()) {
+      newErrors.pickupLocation = 'Pickup location is required';
+    }
+
+    if (!formData.deliveryLocation.trim()) {
+      newErrors.deliveryLocation = 'Delivery location is required';
+    }
+
+    if (!formData.freightType) {
+      newErrors.freightType = 'Please select a freight type';
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Please provide shipment details or message';
+    }
+
+    return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setIsSubmitted(false);
     } else {
-      setSubmitted(true);
       setErrors({});
+      setIsSubmitted(true);
+      // Reset form state after successful submission display
     }
   };
 
@@ -57,146 +91,211 @@ export default function QuoteForm() {
       phone: '',
       pickupLocation: '',
       deliveryLocation: '',
-      freightType: 'FTL',
+      freightType: '',
       message: '',
     });
-    setSubmitted(false);
+    setIsSubmitted(false);
+    setErrors({});
   };
 
   return (
-    <section id="quote" className="section">
+    <section id="quote" className="quote-section">
       <div className="container">
-        <div className="section-header">
-          <span className="section-subtitle">Get Started</span>
-          <h2 className="section-title">Request a Free Freight Quote</h2>
-          <p className="section-description">
-            Fill out the form below and our dispatch team will get back to you within 15 minutes with competitive pricing.
-          </p>
-        </div>
+        <div className="quote-wrapper">
+          <div className="quote-info">
+            <span className="section-subtitle light">Fast & Accurate Pricing</span>
+            <h2 className="quote-title">Request a Freight Quote</h2>
+            <p className="quote-description">
+              Fill out the form with your load details, and our 24/7 dispatch team will get back to you immediately with competitive rates and available lane capacity.
+            </p>
 
-        <div className="quote-container">
-          {submitted ? (
-            <div className="form-success">
-              <CheckCircle size={48} style={{ margin: '0 auto 1rem auto', color: '#166534' }} />
-              <h3 className="form-success-title">Quote Request Received!</h3>
-              <p>Thank you, <strong>{formData.name}</strong>. Our dispatch team is preparing your custom rate quote and will contact you at <strong>{formData.email}</strong> shortly.</p>
-              <button onClick={handleReset} className="btn btn-primary" style={{ marginTop: '1.5rem' }}>
-                Submit Another Request
-              </button>
+            <div className="quote-perks">
+              <div className="perk-item">
+                <CheckCircle2 className="perk-icon" size={20} />
+                <span>No obligation, free instant quote calculation</span>
+              </div>
+              <div className="perk-item">
+                <CheckCircle2 className="perk-icon" size={20} />
+                <span>Customized freight solutions for all cargo sizes</span>
+              </div>
+              <div className="perk-item">
+                <CheckCircle2 className="perk-icon" size={20} />
+                <span>Direct dispatch consultation within 15 minutes</span>
+              </div>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} noValidate>
-              <div className="form-grid-2">
+          </div>
+
+          <div className="quote-form-card">
+            {isSubmitted ? (
+              <div className="submission-success">
+                <div className="success-icon-wrapper">
+                  <CheckCircle2 size={48} />
+                </div>
+                <h3>Quote Request Received!</h3>
+                <p>
+                  Thank you, <strong>{formData.name}</strong>. Our dispatch team is reviewing your shipment from <strong>{formData.pickupLocation}</strong> to <strong>{formData.deliveryLocation}</strong> and will contact you at <strong>{formData.email}</strong> shortly.
+                </p>
+                <button onClick={handleReset} className="btn btn-primary btn-reset">
+                  Submit Another Request
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="quote-form" noValidate>
                 <div className="form-group">
-                  <label htmlFor="name" className="form-label">Full Name *</label>
+                  <label htmlFor="name">
+                    Full Name <span className="required">*</span>
+                  </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className={`form-input ${errors.name ? 'error' : ''}`}
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="John Doe"
+                    placeholder="e.g. John Doe"
+                    className={errors.name ? 'input-error' : ''}
                   />
-                  {errors.name && <span className="error-msg">{errors.name}</span>}
+                  {errors.name && (
+                    <span className="error-message">
+                      <AlertCircle size={14} /> {errors.name}
+                    </span>
+                  )}
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="email">
+                      Email Address <span className="required">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="john@example.com"
+                      className={errors.email ? 'input-error' : ''}
+                    />
+                    {errors.email && (
+                      <span className="error-message">
+                        <AlertCircle size={14} /> {errors.email}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="phone">
+                      Phone Number <span className="required">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="(555) 123-4567"
+                      className={errors.phone ? 'input-error' : ''}
+                    />
+                    {errors.phone && (
+                      <span className="error-message">
+                        <AlertCircle size={14} /> {errors.phone}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="pickupLocation">
+                      Pickup Location <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="pickupLocation"
+                      name="pickupLocation"
+                      value={formData.pickupLocation}
+                      onChange={handleChange}
+                      placeholder="City, State or ZIP"
+                      className={errors.pickupLocation ? 'input-error' : ''}
+                    />
+                    {errors.pickupLocation && (
+                      <span className="error-message">
+                        <AlertCircle size={14} /> {errors.pickupLocation}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="deliveryLocation">
+                      Delivery Location <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="deliveryLocation"
+                      name="deliveryLocation"
+                      value={formData.deliveryLocation}
+                      onChange={handleChange}
+                      placeholder="City, State or ZIP"
+                      className={errors.deliveryLocation ? 'input-error' : ''}
+                    />
+                    {errors.deliveryLocation && (
+                      <span className="error-message">
+                        <AlertCircle size={14} /> {errors.deliveryLocation}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email" className="form-label">Email Address *</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className={`form-input ${errors.email ? 'error' : ''}`}
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="john@example.com"
-                  />
-                  {errors.email && <span className="error-msg">{errors.email}</span>}
-                </div>
-              </div>
-
-              <div className="form-grid-2">
-                <div className="form-group">
-                  <label htmlFor="phone" className="form-label">Phone Number *</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className={`form-input ${errors.phone ? 'error' : ''}`}
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="(555) 000-0000"
-                  />
-                  {errors.phone && <span className="error-msg">{errors.phone}</span>}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="freightType" className="form-label">Freight Type *</label>
+                  <label htmlFor="freightType">
+                    Freight Type <span className="required">*</span>
+                  </label>
                   <select
                     id="freightType"
                     name="freightType"
-                    className={`form-select ${errors.freightType ? 'error' : ''}`}
                     value={formData.freightType}
                     onChange={handleChange}
+                    className={errors.freightType ? 'input-error' : ''}
                   >
-                    <option value="FTL">Full Truckload (FTL)</option>
-                    <option value="LTL">Less Than Truckload (LTL)</option>
-                    <option value="Expedited">Expedited Freight</option>
-                    <option value="Dedicated">Dedicated Transportation</option>
+                    <option value="">Select Freight Type</option>
+                    {freightOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
                   </select>
-                  {errors.freightType && <span className="error-msg">{errors.freightType}</span>}
-                </div>
-              </div>
-
-              <div className="form-grid-2">
-                <div className="form-group">
-                  <label htmlFor="pickupLocation" className="form-label">Pickup Location *</label>
-                  <input
-                    type="text"
-                    id="pickupLocation"
-                    name="pickupLocation"
-                    className={`form-input ${errors.pickupLocation ? 'error' : ''}`}
-                    value={formData.pickupLocation}
-                    onChange={handleChange}
-                    placeholder="City, State or ZIP"
-                  />
-                  {errors.pickupLocation && <span className="error-msg">{errors.pickupLocation}</span>}
+                  {errors.freightType && (
+                    <span className="error-message">
+                      <AlertCircle size={14} /> {errors.freightType}
+                    </span>
+                  )}
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="deliveryLocation" className="form-label">Delivery Location *</label>
-                  <input
-                    type="text"
-                    id="deliveryLocation"
-                    name="deliveryLocation"
-                    className={`form-input ${errors.deliveryLocation ? 'error' : ''}`}
-                    value={formData.deliveryLocation}
+                  <label htmlFor="message">
+                    Shipment Details & Message <span className="required">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="3"
+                    value={formData.message}
                     onChange={handleChange}
-                    placeholder="City, State or ZIP"
-                  />
-                  {errors.deliveryLocation && <span className="error-msg">{errors.deliveryLocation}</span>}
+                    placeholder="Weight, dimensions, special handling requirements..."
+                    className={errors.message ? 'input-error' : ''}
+                  ></textarea>
+                  {errors.message && (
+                    <span className="error-message">
+                      <AlertCircle size={14} /> {errors.message}
+                    </span>
+                  )}
                 </div>
-              </div>
 
-              <div className="form-group">
-                <label htmlFor="message" className="form-label">Additional Cargo / Delivery Details</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  className="form-textarea"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Specify weight, dimensions, temperature requirements, or special instructions..."
-                ></textarea>
-              </div>
-
-              <button type="submit" className="btn btn-primary btn-block">
-                Request Quote <Send size={18} />
-              </button>
-            </form>
-          )}
+                <button type="submit" className="btn btn-submit-quote">
+                  <Send size={18} /> Request Quote
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </section>

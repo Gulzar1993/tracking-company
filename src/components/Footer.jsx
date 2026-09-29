@@ -1,4 +1,5 @@
 import { Truck } from 'lucide-react';
+import './Footer.css';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -6,43 +7,60 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-grid">
+        <div className="footer-top">
           <div className="footer-brand">
-            <a href="#home" className="logo-link">
+            <a href="#home" className="footer-logo">
               <div className="logo-icon">
-                <Truck size={30} />
+                <Truck size={24} />
               </div>
-              <span>RoadLine <span className="logo-accent">Trucking</span></span>
+              <div className="logo-text">
+                <span className="brand-name light">RoadLine</span>
+                <span className="brand-tag">TRUCKING</span>
+              </div>
             </a>
-            <p>
-              Professional trucking and freight logistics solutions across the United States. Premium service, modern fleet, and on-time delivery guaranteed.
+            <p className="footer-brand-desc">
+              Reliable, nationwide freight transportation and logistics solutions built on safety, experience, and speed.
             </p>
           </div>
 
-          <div>
-            <h4 className="footer-heading">Quick Links</h4>
+          <div className="footer-links-group">
+            <h4 className="footer-title">Quick Links</h4>
             <ul className="footer-links">
               <li><a href="#home">Home</a></li>
               <li><a href="#services">Services</a></li>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#fleet">Our Fleet</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#fleet">Fleet</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="footer-heading">Services</h4>
+          <div className="footer-links-group">
+            <h4 className="footer-title">Services</h4>
             <ul className="footer-links">
-              <li><a href="#services">Full Truckload (FTL)</a></li>
-              <li><a href="#services">Less Than Truckload (LTL)</a></li>
+              <li><a href="#services">Full Truckload</a></li>
+              <li><a href="#services">Less Than Truckload</a></li>
               <li><a href="#services">Expedited Freight</a></li>
-              <li><a href="#services">Dedicated Transportation</a></li>
+              <li><a href="#services">Dedicated Routes</a></li>
+              <li><a href="#services">Warehousing & Logistics</a></li>
+              <li><a href="#services">Nationwide Delivery</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-links-group">
+            <h4 className="footer-title">Contact Information</h4>
+            <ul className="footer-contact-info">
+              <li>Chicago, IL</li>
+              <li>Phone: (773) 555-0100</li>
+              <li>Email: dispatch@roadlinetrucking.com</li>
+              <li>24/7 Dispatch Center</li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>© {currentYear} RoadLine Trucking. All rights reserved.</p>
+          <p className="copyright">
+            &copy; {currentYear} RoadLine Trucking. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

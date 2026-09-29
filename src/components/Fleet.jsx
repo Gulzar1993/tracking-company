@@ -1,59 +1,62 @@
-import { Truck, Navigation, Wrench, UserCheck } from 'lucide-react';
+import { Package, Snowflake, Layers, Truck } from 'lucide-react';
+import './Fleet.css';
 
 export default function Fleet() {
   const fleetItems = [
     {
-      id: 'modern-trucks',
-      title: 'Modern Trucks',
-      description: 'Late-model semi-trucks equipped with fuel-efficient engines, climate control, and low-emission technology for reliable haulage.',
-      image: 'https://images.unsplash.com/photo-1501700493788-fa1a4fc9fe62?auto=format&fit=crop&q=80&w=600',
-      icon: <Truck size={24} />,
+      id: 'dry-van',
+      icon: <Package size={32} />,
+      title: 'Dry Van',
+      tag: "53' Trailer",
+      description:
+        'Enclosed trailers that protect general freight such as packaged goods, electronics and retail products.',
     },
     {
-      id: 'gps-tracking',
-      title: 'GPS Tracking',
-      description: 'Real-time satellite GPS tracking on every rig, giving shippers live visibility and precise ETA predictions 24/7.',
-      image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=600',
-      icon: <Navigation size={24} />,
+      id: 'reefer',
+      icon: <Snowflake size={32} />,
+      title: 'Reefer',
+      tag: 'Temp Controlled',
+      description:
+        'Refrigerated trailers with temperature monitoring for food, beverages and pharmaceuticals.',
     },
     {
-      id: 'regular-maintenance',
-      title: 'Regular Maintenance',
-      description: 'Rigorous preventative maintenance schedules and multi-point inspections ensure zero unexpected downtime on critical routes.',
-      image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600',
-      icon: <Wrench size={24} />,
+      id: 'flatbed',
+      icon: <Layers size={32} />,
+      title: 'Flatbed',
+      tag: 'Open Deck',
+      description:
+        'Open trailers for oversized loads like steel, lumber, machinery and construction materials.',
     },
     {
-      id: 'professional-drivers',
-      title: 'Professional Drivers',
-      description: 'Experienced CDL-A drivers with spotless safety records, extensive highway training, and commitment to cargo integrity.',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600',
-      icon: <UserCheck size={24} />,
+      id: 'box-truck',
+      icon: <Truck size={32} />,
+      title: 'Box Truck',
+      tag: "26' Straight",
+      description:
+        'Smaller trucks for local and regional deliveries, final-mile service and tight city routes.',
     },
   ];
 
   return (
-    <section id="fleet" className="section section-alt">
+    <section id="fleet" className="fleet-section">
       <div className="container">
         <div className="section-header">
-          <span className="section-subtitle">Our Capabilities</span>
-          <h2 className="section-title">Our Fleet & Standards</h2>
+          <span className="section-subtitle">Our Equipment</span>
+          <h2 className="section-title">Our Fleet</h2>
           <p className="section-description">
-            We maintain top-tier equipment and rigorous operational standards to ensure maximum safety and efficiency on the road.
+            The right equipment for every load, maintained to the highest standards.
           </p>
         </div>
 
-        <div className="grid grid-4">
+        <div className="fleet-grid">
           {fleetItems.map((item) => (
             <div key={item.id} className="fleet-card">
-              <img src={item.image} alt={item.title} className="fleet-image" />
-              <div className="fleet-content">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#d97706', marginBottom: '0.5rem' }}>
-                  {item.icon}
-                </div>
-                <h3 className="fleet-title">{item.title}</h3>
-                <p className="fleet-desc">{item.description}</p>
+              <div className="fleet-card-header">
+                <div className="fleet-icon">{item.icon}</div>
+                <span className="fleet-card-tag">{item.tag}</span>
               </div>
+              <h3 className="fleet-card-title">{item.title}</h3>
+              <p className="fleet-card-description">{item.description}</p>
             </div>
           ))}
         </div>

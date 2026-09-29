@@ -1,66 +1,57 @@
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import './Contact.css';
 
 export default function Contact() {
   return (
-    <section id="contact" className="section section-alt">
+    <section id="contact" className="contact-section">
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">Get In Touch</span>
-          <h2 className="section-title">Contact RoadLine Trucking</h2>
+          <h2 className="section-title">Contact Information</h2>
           <p className="section-description">
-            Have questions about our freight services or need immediate dispatch assistance? We are available 24/7.
+            Have questions about our lanes, terminal facilities, or freight solutions? Reach out to our logistics team anytime.
           </p>
         </div>
 
         <div className="contact-grid">
-          <div className="contact-info-card">
-            <div className="contact-info-item">
-              <div className="contact-info-icon">
-                <MapPin size={24} />
-              </div>
-              <div>
-                <div className="contact-info-title">Headquarters</div>
-                <div className="contact-info-text">RoadLine Trucking</div>
-                <div style={{ color: '#475569' }}>Chicago, IL</div>
-              </div>
+          <div className="contact-card">
+            <div className="contact-icon">
+              <MapPin size={26} />
             </div>
-
-            <div className="contact-info-item">
-              <div className="contact-info-icon">
-                <Phone size={24} />
-              </div>
-              <div>
-                <div className="contact-info-title">24/7 Phone Support</div>
-                <div className="contact-info-text">(773) 555-0100</div>
-              </div>
-            </div>
-
-            <div className="contact-info-item">
-              <div className="contact-info-icon">
-                <Mail size={24} />
-              </div>
-              <div>
-                <div className="contact-info-title">Email Contact</div>
-                <div className="contact-info-text">dispatch@roadlinetrucking.com</div>
-              </div>
-            </div>
-
-            <div className="contact-info-item">
-              <div className="contact-info-icon">
-                <Clock size={24} />
-              </div>
-              <div>
-                <div className="contact-info-title">Operating Hours</div>
-                <div className="contact-info-text">24/7 Dispatch Operations</div>
-              </div>
-            </div>
+            <h3 className="contact-card-title">Corporate Headquarters</h3>
+            <p className="contact-card-text">
+              RoadLine Trucking<br />
+              Chicago, IL
+            </p>
           </div>
 
-          <div className="contact-map-placeholder">
-            <MapPin size={48} style={{ color: '#d97706', marginBottom: '1rem' }} />
-            <h3 style={{ fontFamily: 'Oswald, sans-serif', fontSize: '1.75rem', marginBottom: '0.5rem' }}>CHICAGO HUB HEADQUARTERS</h3>
-            <p style={{ color: '#94a3b8', maxWidth: '300px' }}>
-              Strategically positioned in Chicago, IL for nationwide interstate freight connectivity across 48 states.
+          <div className="contact-card">
+            <div className="contact-icon">
+              <Phone size={26} />
+            </div>
+            <h3 className="contact-card-title">Phone Number</h3>
+            <p className="contact-card-text">
+              <a href="tel:7735550100">(773) 555-0100</a>
+            </p>
+          </div>
+
+          <div className="contact-card">
+            <div className="contact-icon">
+              <Mail size={26} />
+            </div>
+            <h3 className="contact-card-title">Email Address</h3>
+            <p className="contact-card-text">
+              <a href="mailto:dispatch@roadlinetrucking.com">dispatch@roadlinetrucking.com</a>
+            </p>
+          </div>
+
+          <div className="contact-card">
+            <div className="contact-icon">
+              <Clock size={26} />
+            </div>
+            <h3 className="contact-card-title">Operating Hours</h3>
+            <p className="contact-card-text">
+              24/7 Dispatch Center
             </p>
           </div>
         </div>

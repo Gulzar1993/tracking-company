@@ -4,6 +4,7 @@ import Services from './components/Services';
 import About from './components/About';
 import Fleet from './components/Fleet';
 import WhyChooseUs from './components/WhyChooseUs';
+import Stats from './components/Stats';
 import QuoteForm from './components/QuoteForm';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -16,8 +17,9 @@ export default function App() {
         <Hero />
         <Services />
         <About />
-        <Fleet />
         <WhyChooseUs />
+        <Fleet />
+        <Stats />
         <QuoteForm />
         <Contact />
       </main>
